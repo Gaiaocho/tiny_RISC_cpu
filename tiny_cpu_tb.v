@@ -23,6 +23,31 @@ module tiny_cpu_tb;
   integer error_count = 0;
   integer slow_clock_cycles = 0;
 
+
+  /*
+   *  These are placeholder instructions before we have to deal with
+   *  a compiler.
+   *  The lower 4 bits now become the register to use
+   */
+  initial begin
+    dut.ROM[0]  = 32'h00500093;  // ADDI x1, x0, 5
+    dut.ROM[1]  = 32'h00300113;  // ADD1 x1, x2, 3
+    dut.ROM[2]  = 32'h002081B3;  // ADD x3, x1,  8
+    dut.ROM[3]  = 32'h0071F213;  // ANDI x4, x3, 0
+    dut.ROM[4]  = 32'h0011E293;  // ORI  x5, x3, 9
+    dut.ROM[5]  = 32'h02A00313;  // ADDI x6, x0, 42
+    dut.ROM[6]  = 32'h00000393;  // ADDI x7, x0, 0
+    dut.ROM[7]  = 32'h00638023;  // SW   x6, 0(x7)
+    dut.ROM[8]  = 32'h00000000;
+    dut.ROM[9]  = 32'h0003A403;  // LW   x8, 0(x7)
+    dut.ROM[10] = 32'h00000000;
+    dut.ROM[11] = 32'h00000000;
+    dut.ROM[12] = 32'h00000000;
+    dut.ROM[13] = 32'h00000000;
+    dut.ROM[14] = 32'h00000000;
+    dut.ROM[15] = 32'h00000000;
+  end
+
   initial begin
     $dumpvars(0, tiny_cpu_tb);  // Dump all variables for waveform viewing
 

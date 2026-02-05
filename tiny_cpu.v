@@ -1,3 +1,4 @@
+`default_nettype none
 module tiny_cpu (
     //Inputs
     input CLK,
@@ -15,11 +16,11 @@ module tiny_cpu (
   reg         [31:0] R                                           [ 16];
   //Program Counter
   reg         [ 3:0] PC = 0;
-  //ROM Memory 16 registers whose size is 8 bits
+  //ROM Memory 16 registers whose size is 32 bits
   reg         [31:0] ROM                                         [ 16];
 
   //RAM Memory 256 Words
-  reg         [31:0] RAM                                         [256];
+  reg         [31:0] RAM                                         [128];
 
 
 
@@ -47,31 +48,8 @@ module tiny_cpu (
 
   wire slow_clk = frequency_counter_i[2];
 
-  /*
-   *  These are placeholder instructions before we have to deal with
-   *  a compiler.
-   *  The lower 4 bits now become the register to use
-   */
-  initial begin
-    ROM[0]  = 32'h00500093;  // ADDI x1, x0, 5
-    ROM[1]  = 32'h00300113;  // ADD1 x1, x2, 3
-    ROM[2]  = 32'h002081B3;  // ADD x3, x1,  8
-    ROM[3]  = 32'h0071F213;  // ANDI x4, x3, 0
-    ROM[4]  = 32'h0011E293;  // ORI  x5, x3, 9
-    ROM[5]  = 32'h02A00313;  // ADDI x6, x0, 42
-    ROM[6]  = 32'h00000393;  // ADDI x7, x0, 0
-    ROM[7]  = 32'h00638023;  // SW   x6, 0(x7)
-    ROM[8]  = 32'h00000000;
-    ROM[9]  = 32'h0003A403;  // LW   x8, 0(x7)
-    ROM[10] = 32'h00000000;
-    ROM[11] = 32'h00000000;
-    ROM[12] = 32'h00000000;
-    ROM[13] = 32'h00000000;
-    ROM[14] = 32'h00000000;
-    ROM[15] = 32'h00000000;
-  end
-
-  /* Actually run ourt CPU */
+  
+  /* Actually run our CPU */
   always @(posedge slow_clk) begin
     IR <= ROM[PC];
 
